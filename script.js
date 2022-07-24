@@ -43,38 +43,40 @@ onload = function() {
             this.direction.y = randomIntFromRange(-5, 5);
         }
     }
+    
     function createParticles() {
         for (let i = 0; i < 250; i++) {
             const x = Math.random() * window.innerWidth;
             const y = Math.random() * window.innerHeight;
             const radius = (Math.random() * 2) + 1;
             const color = `rgba(${randomColor()}, ${randomColor()}, ${randomColor(),.5})`;
-            particles.push(new Particle(x, y, radius, color, 
-                {x:Math.random() < 0.5?-1:1,y:Math.random() < 0.5?-1:1}));
+            const coordinates = {x: Math.random() < 0.5 ? -1 : 1, y: Math.random() < 0.5 ? - 1 : 1 }
+            particles.push(new Particle(x, y, radius, color, coordinates));
+        }
+        if (particles.length === 250) {
+            console.log(particles.length)
         }
     }
+
     createParticles();
+
     function animation() {
         ctx.clearRect(0,0, canvas.width, canvas.height);
         particles.forEach(particle =>{
-            //particle.draw();
+            particle.draw();
             particle.move();
         })
         connect();
         requestAnimationFrame(animation);
     }
     animation();
-    this.document.addEventListener('click', (e)=>{
-        particles.forEach(particle => {
-            particle.randomMove();
-        })
-    })
+
     function connect() {
         let opacity = 1;
         for (let a = 0; a < particles.length; a++) {
             for (let b = a; b < particles.length; b++) {
                 let distance = ((particles[a].x - particles[b].x) *(particles[a].x - particles[b].x)) + ((particles[a].y - particles[b].y)*(particles[a].y - particles[b].y))
-                if (distance < 700) {
+                if (distance < 1000) {
                     opacity = 1 - (distance /  10000);
                     ctx.strokeStyle = 'rgba(255, 255, 255,'+ opacity + ')';
                     ctx.beginPath();
