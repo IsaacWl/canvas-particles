@@ -1,2 +1,3 @@
-# Canvas particle effect with Vanilla js.
-Particle movement and nice effects.
+# Html5 canvas particle effect.
+
+Canvas animation with only javascript.
